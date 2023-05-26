@@ -1,0 +1,345 @@
+
+'This sets up the screen
+ScreenSetup()
+
+'This sets the drawtype to 0 so you can't draw anything
+drawtype = 0 
+
+'This sets the turtletype to 0 so you the turtle can't draw anything
+turtletype = 0
+
+colourtype = 0
+
+rainbow = 0
+
+move = 0
+turn = 0
+
+'GraphicsWindow Setup
+GraphicsWindow.Height = Desktop.Height
+GraphicsWindow.Width = Desktop.Width
+GraphicsWindow.Left = 0
+GraphicsWindow.Top = 0 
+
+'Mouse Setup
+GraphicsWindow.MouseDown = OnMouseDown
+GraphicsWindow.MouseUp = OnMouseUp
+GraphicsWindow.MouseMove = OnMouseMove
+GraphicsWindow.KeyDown = OnKeyDown 
+
+'#########################################################################################
+
+'Creates the project name box
+GraphicsWindow.BrushColor = "Gray"
+GraphicsWindow.FillRectangle (250,0,600,55) 
+Words = "Project Name"
+GraphicsWindow.BrushColor = "Black"
+GraphicsWindow.FontSize = 40
+GraphicsWindow.DrawText (250,0,Words)
+
+'Key pressed subroutine
+Sub OnKeyDown
+  If GraphicsWindow.LastKey="Back" Then 
+    GraphicsWindow.FontSize = 40
+    words = Text.GetSubText(Words,1,Text.GetLength(Words)-1)
+  Else 
+    Words = Words + GraphicsWindow.LastKey
+  EndIf 
+  'Updates the text box with new chartacters 
+  GraphicsWindow.BrushColor = "Gray"
+  GraphicsWindow.FillRectangle (250,0,600,55)
+  GraphicsWindow.BrushColor = "Black"
+  GraphicsWindow.DrawText (250,0,Words)
+  
+  
+EndSub
+
+
+'Screen Setup subroutine
+Sub ScreenSetup
+  
+  GraphicsWindow.BrushColor = "Gray"
+  GraphicsWindow.FillRectangle (250,0,600,55) 
+  Words = "Project Name"
+  GraphicsWindow.BrushColor = "Black"
+  GraphicsWindow.FontSize = 40
+  GraphicsWindow.DrawText (250,0,Words)
+  
+  GraphicsWindow.FontSize = 12
+  GraphicsWindow.DrawText(2, 160, "Pen Size")
+  
+  RecButton = Controls.AddButton("DrawRectangle", 5, 50)
+  FRecButton = Controls.AddButton("FillRectangle", 110, 50)
+  ElliButton = Controls.AddButton("DrawEllipse", 5, 75)
+  FElliButton = Controls.AddButton("FillEllipse", 110, 75)
+  FDButton = Controls.AddButton("Free_Draw", 5, 100)
+  LDButton = Controls.AddButton("Line_Draw",100, 100)
+  CButton = Controls.AddButton("Clear",55,125)
+  
+  PattonButton = Controls.AddButton("Pattern On",70,150)
+  Pattoffbutton = Controls.AddButton("Pattern Off", 151, 150)
+  Pausebutton = Controls.AddButton("Pause", 70, 175)
+  Resumebutton = Controls.AddButton("Resume", 118, 175)
+  
+  PButton = Controls.AddButton("Picture", 97, 125)
+  
+  EButton = Controls.AddButton("Eraser", 5, 125)
+  
+  CPButton = Controls.AddButton("Colour_Picker",82,205)
+  
+  PenPbutton = Controls.AddButton("+", 5, 180)
+  PenMbutton = Controls.AddButton(" - ", 30, 180)
+  
+  RGBbutton = Controls.AddButton("RGB Select", 5, 205)
+  
+  RButton = Controls.AddButton("Rainbow_On", 177, 205)
+  RoffButton = Controls.AddButton("Rainbow_Off", 177, 180)
+  
+  
+  
+  
+  
+  Controls.ButtonClicked = Clicked 
+  
+  imageNew = "PUT THE FILE PATH HERE"
+  imageHome = "PUT THE FILE PATH HERE"
+  image = "PUT THE FILE PATH HERE" 
+  picture = "PUT THE FILE PATH HERE"
+  
+  
+  GraphicsWindow.DrawImage(imageNew, 0, 230)
+  
+  
+  
+  GraphicsWindow.PenWidth = 2
+EndSub 
+
+
+'Button clicked subroutine
+Sub Clicked
+  lastButton = Controls.LastClickedButton
+  If lastButton = RecButton Then
+    drawtype = 1
+  EndIf
+  
+  If lastButton = FDButton Then
+    drawtype = 2
+  EndIf
+  
+  If lastButton = ElliButton Then
+    drawtype = 3
+  EndIf
+  
+  If lastButton = FRecButton Then
+    drawtype = 4
+  EndIf
+  
+  If lastButton = FElliButton Then
+    drawtype = 5
+  EndIf
+  
+  If lastButton = EButton Then
+    drawtype = 6
+  EndIf
+  
+  If lastButton = LDButton Then
+    drawtype = 7
+  EndIf
+  
+  If lastButton = PButton Then
+    drawtype = 8
+  EndIf
+  
+  If lastButton = CButton Then
+    GraphicsWindow.Clear()
+    ScreenSetup()
+  EndIf
+  
+  If lastButton = CPButton Then
+    colourtype = 1
+  EndIf
+  
+  If lastButton = RButton Then 
+    rainbow = 1
+  EndIf
+  
+  If lastButton = RoffButton Then
+    rainbow = 0
+  EndIf
+  
+  
+  If lastButton = PattonButton Then 
+    turtletype = 1
+  EndIf
+  
+  If lastButton = Pattoffbutton Then 
+    turtletype = 0
+    Turtle.Hide()
+    Turtle.PenUp()
+  EndIf
+  
+  
+  If lastButton = Pausebutton Then 
+    Turtle.Hide()
+    Turtle.Speed = 0
+  EndIf
+  
+  If lastButton = Resumebutton Then 
+    Turtle.Show()
+    Turtle.PenDown()
+    Turtle.Speed = 10
+  EndIf
+  
+  
+  If lastButton = RGBbutton Then 
+    TextWindow.WriteLine("Enter 3 hex numbers")
+    R = TextWindow.ReadNumber()
+    G = TextWindow.ReadNumber()
+    B = TextWindow.ReadNumber()
+    
+    GraphicsWindow.PenColor = GraphicsWindow.GetColorFromRGB(R,G,B)
+    GraphicsWindow.BrushColor = GraphicsWindow.GetColorFromRGB(R,G,B)
+    GraphicsWindow.FillRectangle(15,5, 150,40) 
+  EndIf
+  
+  
+  
+  
+  If lastButton = PenPbutton Then
+    GraphicsWindow.PenWidth = GraphicsWindow.PenWidth + 1
+    GraphicsWindow.Title = "Pen Size =" + GraphicsWindow.PenWidth
+  EndIf
+  
+  If lastButton = PenMbutton Then
+    GraphicsWindow.PenWidth = GraphicsWindow.PenWidth - 1
+    GraphicsWindow.Title = "Pen Size =" + GraphicsWindow.PenWidth
+  EndIf
+  
+EndSub 
+
+'#########################################################################################
+
+'Mouse Up subroutine
+Sub OnMouseUp
+  lastx = GraphicsWindow.MouseX
+  lasty = GraphicsWindow.MouseY
+  
+  If drawtype = 1  Then
+    GraphicsWindow.DrawRectangle(x, y, lastx-x, lasty-y)
+  EndIf
+  If drawtype = 3 Then
+    GraphicsWindow.DrawEllipse(x, y, lastx-x, lasty-y)
+  EndIf
+  If drawtype = 4 Then
+    GraphicsWindow.FillRectangle(x, y, lastx-x, lasty-y)
+  EndIf
+  
+  If drawtype = 5 Then
+    GraphicsWindow.FillEllipse(x, y, lastx-x, lasty-y)
+  EndIf
+  
+  If drawtype = 7 Then
+    GraphicsWindow.DrawLine(x, y, lastx, lasty)
+  EndIf
+  
+  If colourtype = 1 Then
+    GraphicsWindow.PenColor = GraphicsWindow.GetPixel(lastx,lasty)
+    GraphicsWindow.BrushColor = GraphicsWindow.GetPixel(lastx,lasty)
+    colourtype = 0
+  EndIf
+  GraphicsWindow.FillRectangle(15,5, 150,40)
+  
+  'This changes the colour to what the mouse is on
+  If GraphicsWindow.MouseX < 300 And GraphicsWindow.MouseY > 230 Then
+    GraphicsWindow.PenColor = GraphicsWindow.GetPixel(lastx,lasty)
+    GraphicsWindow.BrushColor = GraphicsWindow.GetPixel(lastx,lasty)
+  EndIf
+  GraphicsWindow.FillRectangle(15,5, 150,40)   
+  
+EndSub 
+
+'Mouse Down subroutine
+Sub OnMouseDown
+  x = GraphicsWindow.MouseX
+  y = GraphicsWindow.MouseY 
+  
+  'This is for the pattern generator
+  If turtletype = 1 And GraphicsWindow.MouseX > 500 Then 
+    Turtle.Show()
+    Turtle.Speed = 10
+    Turtle.PenUp()
+    Turtle.MoveTo(Mouse.MouseX,Mouse.MouseY)
+    Turtle.PenDown()
+    
+    turn = Math.GetRandomNumber(359)
+    
+    GraphicsWindow.Title = "Turn =" + turn + " " + "Move =" + move 
+    
+    For a = 1 To 99999
+      Turtle.Move(move/a)
+      Turtle.Turn(turn)
+      Turtle.Move(move+a-move)
+      Turtle.Turn(turn)
+      Turtle.Move(move/a)
+      Turtle.Turn(turn)
+      Turtle.Move(move+a-move)
+      Turtle.Turn(turn)
+      If Turtle.X < 230 Then
+        Turtle.PenUp()
+        
+        
+      EndIf
+      
+      
+    EndFor
+    
+  EndIf
+  
+  
+  If drawtype = 8 Then
+    GraphicsWindow.DrawImage(picture, GraphicsWindow.MouseX, GraphicsWindow.MouseY)
+  EndIf
+  
+  
+  'This draws the palette so it doesn't get covered up
+  GraphicsWindow.DrawImage(imageNew, 0, 230) 
+  
+  
+EndSub
+
+
+'Mouse Move subroutine
+Sub OnMouseMove
+  xm = GraphicsWindow.MouseX
+  ym = GraphicsWindow.MouseY
+  
+  'This is the Free draw
+  If Mouse.IsLeftButtonDown And drawtype = 2 then
+    GraphicsWindow.DrawLine(lastxm, lastym, xm, ym)
+    
+    'This is the erasor
+  ElseIf Mouse.IsLeftButtonDown and drawtype = 6 then
+    GraphicsWindow.PenColor = "White"
+    GraphicsWindow.BrushColor = "White"
+    GraphicsWindow.DrawLine(lastxm, lastym, xm, ym)
+  endif
+  
+  lastxm = xm
+  lastym = ym
+  
+EndSub
+
+
+'Timer Setup
+Timer.Interval  = 100
+Timer.Tick = OnTick
+
+'Timer changes the colour constantly
+Sub Ontick
+  If rainbow = 1 Then
+    GraphicsWindow.PenColor = GraphicsWindow.GetColorFromRGB(Math.GetRandomNumber(255),Math.GetRandomNumber(255),Math.GetRandomNumber(255))
+    GraphicsWindow.BrushColor = GraphicsWindow.GetColorFromRGB(Math.GetRandomNumber(255),Math.GetRandomNumber(255),Math.GetRandomNumber(255))
+    GraphicsWindow.FillRectangle(15,5, 150,40)
+  EndIf
+  
+EndSub
