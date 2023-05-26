@@ -1,0 +1,186 @@
+'Made by Sasha Eaton
+
+
+
+
+
+
+
+' Standard code for hooking up key, mouse, and text input actions to the graphics window.
+GraphicsWindow.KeyDown = OnKeyDown
+GraphicsWindow.KeyUp = OnKeyUp
+GraphicsWindow.MouseDown = OnMouseDown
+GraphicsWindow.MouseMove = OnMouseMove
+GraphicsWindow.MouseUp = OnMouseUp
+GraphicsWindow.TextInput = OnTextInput
+
+Sub OnKeyDown
+  ' Code for key presses goes here.
+  
+EndSub
+
+Sub OnKeyUp
+  ' Code for key releases goes here.
+  
+EndSub
+
+Sub OnMouseDown
+  ' Code for mouse button presses goes here.
+  If Mouse.IsLeftButtonDown Then
+    
+    move = Math.GetRandomNumber(500)
+    turn = Math.GetRandomNumber(359)
+    RGB1 = Math.GetRandomNumber(255)
+    RGB2 = Math.GetRandomNumber(255)
+    RGB3 = Math.GetRandomNumber(255)
+    
+    GraphicsWindow.Clear()
+    
+    Turtle.PenUp()
+    Turtle.MoveTo(Mouse.MouseX,Mouse.MouseY)
+    Turtle.PenDown() 
+    GraphicsWindow.Title = "Turn =" + turn + " " + "Move =" + move 
+    Turtle.Show()
+    GraphicsWindow.PenColor = GraphicsWindow.GetColorFromRGB(RGB1,RGB2,RGB3)
+    Button1 = Controls.AddButton("Random", 50, 50)
+    
+  ElseIf Mouse.IsRightButtonDown Then
+    
+    Turtle.PenUp()
+    Turtle.MoveTo(Mouse.MouseX,Mouse.MouseY)
+    Turtle.PenDown()
+  Else
+    
+    
+  EndIf
+EndSub
+
+Sub OnMouseMove
+  ' Code for mouse moves goes here.
+  ' GraphicsWindow.MouseX and GraphicsWindow.MouseY are relative to the graphics window.
+  ' Mouse.MouseX and Mouse.MouseY are relative to the entire screen, which is typically bigger than the graphics window.
+  
+EndSub
+
+Sub OnMouseUp
+  ' Code for mouse button releases goes here.
+  
+EndSub
+
+Sub OnTextInput
+  ' Code for text inputs goes here.
+EndSub
+
+
+
+
+
+'Turtle Setup
+Turtle.Show()
+Turtle.Speed = 10
+GraphicsWindow.PenWidth = 2
+Turtle.X = 750
+Turtle.Y = 500
+
+'GraphicsWindow Setup
+GraphicsWindow.Height = Desktop.Height
+GraphicsWindow.Width = Desktop.Width
+GraphicsWindow.Left = 0
+GraphicsWindow.Top = 0
+
+'Button Setup
+Button1 = Controls.AddButton("Random", 50, 50)
+Controls.ButtonClicked = Clicked
+
+GraphicsWindow.PenColor = GraphicsWindow.GetColorFromRGB(RGB1,RGB2,RGB3)
+GraphicsWindow.KeyDown = circle
+
+Sub Clicked
+  lastButton = Controls.LastClickedButton
+  
+  If lastButton = Button1 Then
+    move = Math.GetRandomNumber(500)
+    turn = Math.GetRandomNumber(359)
+    RGB1 = Math.GetRandomNumber(255)
+    RGB2 = Math.GetRandomNumber(255)
+    RGB3 = Math.GetRandomNumber(255)
+    
+    GraphicsWindow.Clear()
+    Turtle.X = 750
+    Turtle.Y = 500
+    Turtle.Show()
+    GraphicsWindow.PenColor = GraphicsWindow.GetColorFromRGB(RGB1,RGB2,RGB3)
+    
+    Button1 = Controls.AddButton("Random", 50, 50)
+  EndIf
+  
+  
+EndSub
+
+
+Sub circle
+  If GraphicsWindow.LastKey = "Up" Then
+    
+    For a = 1 To 99999
+      Turtle.Move(move)
+      Turtle.Turn(turn)
+    EndFor
+    
+  EndIf  
+  
+  If GraphicsWindow.LastKey = "Left" Then
+    move = Math.GetRandomNumber(550)
+    turn = Math.GetRandomNumber(359)
+    RGB1 = Math.GetRandomNumber(255)
+    RGB2 = Math.GetRandomNumber(255)
+    RGB3 = Math.GetRandomNumber(255)
+  EndIf
+  
+  If GraphicsWindow.LastKey = "Down" Then
+    Turtle.Hide()
+  EndIf
+  
+  If GraphicsWindow.LastKey = "Space" Then
+    Turtle.Show()
+  EndIf
+  
+  If GraphicsWindow.LastKey = "R" Then
+    GraphicsWindow.PenColor = GraphicsWindow.GetColorFromRGB(Math.GetRandomNumber(255),Math.GetRandomNumber(255),Math.GetRandomNumber(255))
+  EndIf
+  
+  If GraphicsWindow.LastKey = "C" Then
+    GraphicsWindow.Clear()
+  EndIf
+  
+  If GraphicsWindow.LastKey = "B" Then
+    GraphicsWindow.BackgroundColor = GraphicsWindow.GetColorFromRGB(Math.GetRandomNumber(255),Math.GetRandomNumber(255),Math.GetRandomNumber(255))
+  EndIf
+  
+  If GraphicsWindow.LastKey = "T" Then
+    Timer.Pause()
+  EndIf
+  
+  If GraphicsWindow.LastKey = "Y" Then
+    Timer.Resume()
+  EndIf
+  
+  If GraphicsWindow.LastKey = "X" Then
+    Program.End()
+  EndIf
+  
+  
+EndSub
+
+
+'Timer Setup
+Timer.Interval  = 1200
+Timer.Tick = OnTick
+
+Sub Ontick
+  GraphicsWindow.PenColor = GraphicsWindow.GetColorFromRGB(Math.GetRandomNumber(255),Math.GetRandomNumber(255),Math.GetRandomNumber(255))
+EndSub
+
+
+
+
+
