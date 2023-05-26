@@ -1,0 +1,79 @@
+
+'GraphicsWindow Setup
+GraphicsWindow.Height = Desktop.Height
+GraphicsWindow.Width = Desktop.Width
+GraphicsWindow.Left = 0
+GraphicsWindow.Top = 0
+
+
+'Mouse Setup
+GraphicsWindow.MouseDown = OnMouseDown
+GraphicsWindow.MouseUp = OnMouseUp
+GraphicsWindow.MouseMove = OnMouseMove
+
+'Button Setup
+Button1 = Controls.AddButton("Rectangle", 50, 50)
+Controls.ButtonClicked = Clicked
+
+image = "C:\Users\201852\OneDrive - Halesowen College\Pictures\Colours2.PNG"
+
+GraphicsWindow.DrawImage(image, 0, 700) 
+
+Sub Clicked
+  lastButton = Controls.LastClickedButton
+  
+  If lastButton = Button1 Then
+    
+  EndIf
+  EndSub
+
+Sub OnMouseUp
+  
+  Mup_x = GraphicsWindow.MouseX
+  Mup_y = GraphicsWindow.MouseY
+  
+  GraphicsWindow.PenColor = GraphicsWindow.GetPixel(Mup_x,Mup_y)
+  GraphicsWindow.BrushColor = GraphicsWindow.GetPixel(Mup_x,Mup_y)
+  GraphicsWindow.FillRectangle(800,100, 50,50)
+
+  EndSub
+
+Sub OnMouseDown
+  
+x = GraphicsWindow.MouseX
+y = GraphicsWindow.MouseY
+
+GraphicsWindow.DrawImage(image, 0, 700)
+  
+If Mouse.IsLeftButtonDown Then
+
+    
+ElseIf Mouse.IsRightButtonDown Then
+  GraphicsWindow.FillRectangle(800,100, 50,50)
+  GraphicsWindow.DrawLine(x,y, Mup_x, Mup_y)
+Else
+  
+    
+  EndIf
+  
+EndSub
+
+Sub OnMouseMove
+x = GraphicsWindow.MouseX
+y = GraphicsWindow.MouseY
+If (Mouse.IsLeftButtonDown) then
+  GraphicsWindow.DrawLine(Mup_x, Mup_y, x, y)
+  
+endif
+Mup_x = x
+Mup_y = y
+EndSub
+
+
+
+
+
+
+
+
+
